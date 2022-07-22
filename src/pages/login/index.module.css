@@ -1,0 +1,36 @@
+.container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* .form {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+} */
+
+.form div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: fit-content;
+    margin: auto;
+    padding: 0.4rem;
+
+}
+.d_none{
+    display: none;
+}
+.d_initial{
+    display: initial;
+}
+.logo_section{
+    text-align: center;
+}
+
+.logo_section img{
+    width: 80%;
+}

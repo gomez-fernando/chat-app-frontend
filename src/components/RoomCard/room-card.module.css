@@ -1,0 +1,35 @@
+.card_container {
+    border: 1px solid #8080805a;
+    margin: 0.2rem 0.2rem 0.2rem 0.2rem;
+}
+.message {
+    font-size: 1.2rem;
+}
+.card_container div:first-child {
+    font-size: 0.8rem;
+    font-style: italic;
+}
+.card_container div:last-child {
+    font-size: 1.1rem;
+}
+.mine {
+    text-align: end;
+    justify-self: end;
+    width: 70%;
+    padding-right: 1rem;
+    border-radius: 0 20px 0 20px;
+    height: 55px;
+}
+.mine div:first-child, .not_mine div:first-child {
+    margin: 3px
+}
+
+.not_mine {
+    background-color: var(--primary-color-light);
+    text-align: start;
+    width: 70%;
+    border-radius: 0 20px 20px 0;
+    padding-left: 1rem;
+    border-radius: 20px 0 20px 0;
+    height: 55px;
+}
