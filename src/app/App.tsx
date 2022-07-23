@@ -44,6 +44,10 @@ function App() {
         }
     });
 
+    socket.on('set-online', (payload) => {
+        dispatcher(updateUserAction(payload as iUser));
+    });
+
     socket.on('on-conversation', (payload) => {
         dispatcher(updateUserAction(payload as iUser));
     });

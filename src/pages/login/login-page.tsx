@@ -56,6 +56,7 @@ export default function LoginPage() {
         setLoading(true);
 
         const resp = await apiChat.login(formData);
+        console.log('resp: ', resp);
 
         if (resp.statusCode !== 401) {
             const rooms = await apiChat.getAllRoomsByUser(
@@ -64,6 +65,7 @@ export default function LoginPage() {
             );
             const users = await apiChat.getAllUsers(resp.user._id, resp.token);
             setLoading(false);
+
 
             let user = resp.user;
             user = { ...user, token: resp.token };
@@ -74,13 +76,12 @@ export default function LoginPage() {
 
             localStorage.setUser(user._id);
             localStorage.setToken(user.token);
-            const newUser: iUser = {
-                ...user,
-                online: true,
-                token: user.token,
-            };
+            // const newUser: iUser = {
+            //     ...user,
+            //     token: user.token,
+            // };
 
-            socket.emit('update-user', newUser);
+            socket.emit('set-online', resp.user);
 
             navigate(`/`);
         } else {
