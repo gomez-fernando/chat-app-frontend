@@ -10,7 +10,7 @@ import styles from './create-group-page.module.css';
 import { Button, TextField } from '@mui/material';
 
 export default function CreateGroupPage() {
-    const loggedUser = useSelector((store: iStore) => store.user[0]);
+    const loggedUser = useSelector((store: iStore) => store.user);
 
     const users = useSelector((store: iStore) => store.users);
     const groupRoom = useSelector((store: iStore) => store.groupRoom);
@@ -99,7 +99,12 @@ export default function CreateGroupPage() {
                     </div>
                 </div>
                 <div className={styles.button}>
-                    <Button type="submit" variant="contained" size="small" data-testid="submit-button">
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        size="small"
+                        data-testid="submit-button"
+                    >
                         Crear grupo
                     </Button>
                 </div>

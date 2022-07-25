@@ -13,10 +13,11 @@ export function Layout({
 }){
 
     const user = useSelector((store: iStore) => store.user);
+
     
     return (
         <>
-        {user.length !== 0 &&
+        {user.nickname !== '' &&
             <Header navOptions={navOptions} />
 
         }

@@ -2,11 +2,11 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Room } from '../../components/Room/room';
 import { iMessage, iStore } from '../../interfaces/interfaces';
-import styles from './room-page.module.css'
+import styles from './room-page.module.css';
 
 export default function RoomPage() {
     const { id } = useParams();
-    const user = useSelector((store: iStore) => store.user[0]);
+    const user = useSelector((store: iStore) => store.user);
 
     const rooms = useSelector((store: iStore) => store.rooms);
     const users = useSelector((store: iStore) => store.users);
@@ -25,7 +25,11 @@ export default function RoomPage() {
             {room?.type === 'group' ? (
                 <div className={styles.other_user}>
                     <span>
-                        <img className={styles.avatar} src={room.image} alt={room.name} />
+                        <img
+                            className={styles.avatar}
+                            src={room.image}
+                            alt={room.name}
+                        />
                     </span>
                     <span>{room.name}</span>
                 </div>
@@ -33,12 +37,19 @@ export default function RoomPage() {
                 <div className={styles.other_user}>
                     <span>
                         <img
-                         className={styles.avatar}
+                            className={styles.avatar}
                             src={otherUser?.avatar}
                             alt={otherUser?.nickname}
                         />
                     </span>
-                    <span data-testid="2">{otherUser?.nickname}</span>{' '}
+                    <span data-testid="2">{otherUser?.nickname}</span>
+                    <span>
+                        {otherUser?.online ? (
+                            <span className="text_green">en línea...</span>
+                        ) : (
+                            ''
+                        )}
+                    </span>
                 </div>
             )}
             {rooms.length > 0 && (

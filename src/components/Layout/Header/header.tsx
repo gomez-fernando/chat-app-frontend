@@ -7,10 +7,11 @@ import { iRouterItem, iStore, iUser } from '../../../interfaces/interfaces';
 import { loadLoggedUsersAction } from '../../../reducers/logged-user/action.creators';
 import { loadRoomsAction } from '../../../reducers/room/action.creators';
 import { loadUsersAction } from '../../../reducers/user/action.creators';
+import { emptyUser } from '../../../utils/mocks';
 import styles from './index.module.css';
 
 export function Header({ navOptions }: { navOptions: iRouterItem[] }) {
-    const user = useSelector((store: iStore) => store.user[0]);
+    const user = useSelector((store: iStore) => store.user);
 
     const dispatcher = useDispatch();
 
@@ -21,16 +22,17 @@ export function Header({ navOptions }: { navOptions: iRouterItem[] }) {
         localStorage.removeItem('User');
         localStorage.removeItem('Token');
 
-        dispatcher(loadLoggedUsersAction([]));
+        dispatcher(loadLoggedUsersAction(emptyUser));
         dispatcher(loadUsersAction([]));
         dispatcher(loadRoomsAction([]));
 
         const newUser: iUser = {
             ...user,
             online: false,
+            onConversation: '',
         };
 
-        socket.emit('update-user', newUser);
+        socket.emit('set-offline', newUser);
 
         navigate(`/login`);
     };
@@ -72,6 +74,11 @@ export function Header({ navOptions }: { navOptions: iRouterItem[] }) {
     };
 
     const navAndClose = () => {
+        console.log(
+            'user on conversation when click links: ',
+            user.onConversation
+        );
+
         closeModal();
         if (user.onConversation !== '') {
             socket.emit('on-conversation', {
@@ -84,6 +91,10 @@ export function Header({ navOptions }: { navOptions: iRouterItem[] }) {
     };
 
     const navAndEmit = (path: string) => {
+        console.log(
+            'user on conversation when click links: ',
+            user.onConversation
+        );
         if (user.onConversation !== '') {
             socket.emit('on-conversation', {
                 userId: user._id,
@@ -120,6 +131,7 @@ export function Header({ navOptions }: { navOptions: iRouterItem[] }) {
                             id="open-modal"
                             role="button"
                         />
+                        {user.nickname}
                     </div>
                 </nav>
 

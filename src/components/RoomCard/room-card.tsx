@@ -10,7 +10,7 @@ export function RoomCard({
     message: iMessage;
     rtype: string;
 }) {
-    const user = useSelector((store: iStore) => store.user[0]);
+    const user = useSelector((store: iStore) => store.user);
     const users = useSelector((store: iStore) => store.users);
 
     const date = formatDate(message.createdAt as string);

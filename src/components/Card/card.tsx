@@ -8,7 +8,7 @@ import { Avatar } from '../Avatar/avatar';
 import styles from './card.module.css';
 
 export function Card({ room }: { room: iRoom }) {
-    const user = useSelector((store: iStore) => store.user[0]);
+    const user = useSelector((store: iStore) => store.user);
     const navigate = useNavigate();
     const users = useSelector((store: iStore) => store.users);
     const id1 = room.name?.substring(0, 24);

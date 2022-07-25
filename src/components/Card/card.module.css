@@ -24,7 +24,7 @@
 .info1 {
     display: flex;
 }
-.info1 div:first-child span:first-child {
+.info1 div:first-child>span:first-child {
     font-weight: bold;
 }
 .info1 div:last-child span:first-child {
@@ -34,7 +34,7 @@
     text-align: end;
 }
 .info1 div:first-child span:first-child{
-    margin-right: 2rem;
+    margin-right: 1.8rem;
 }
 .info2{
     padding: 0.4rem 0 0 0;

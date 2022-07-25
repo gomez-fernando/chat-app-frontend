@@ -65,22 +65,22 @@ export default function LoginPage() {
             const users = await apiChat.getAllUsers(resp.user._id, resp.token);
             setLoading(false);
 
+
             let user = resp.user;
             user = { ...user, token: resp.token };
 
-            dispatcher(loadLoggedUsersAction([user]));
+            dispatcher(loadLoggedUsersAction(user));
             dispatcher(loadUsersAction(users));
             dispatcher(loadRoomsAction(rooms));
 
             localStorage.setUser(user._id);
             localStorage.setToken(user.token);
-            const newUser: iUser = {
-                ...user,
-                online: true,
-                token: user.token,
-            };
+            // const newUser: iUser = {
+            //     ...user,
+            //     token: user.token,
+            // };
 
-            socket.emit('update-user', newUser);
+            socket.emit('set-online', resp.user);
 
             navigate(`/`);
         } else {

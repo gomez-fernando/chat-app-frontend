@@ -10,7 +10,7 @@ export function CreateGroupUsersList({
     data: iUser[];
     group: boolean;
 }) {
-    const user = useSelector((store: iStore) => store.user[0]);
+    const user = useSelector((store: iStore) => store.user);
 
     const users = data.filter((item) => item._id !== user._id);
 
@@ -18,7 +18,7 @@ export function CreateGroupUsersList({
         <ul className={styles.ul_container}>
             {users.map((item) => (
                 <li key={item._id}>
-                    <CreateGroupCard user={item} />
+                    <CreateGroupCard otherUser={item} />
                 </li>
             ))}
         </ul>

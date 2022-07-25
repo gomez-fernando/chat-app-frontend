@@ -38,6 +38,14 @@ export const mockUpdatedRoom = {
 
 export const mockRoomArray: iRoom[] = [mockRoom, mockRoom2];
 
+export const emptyUser = {
+    email: '',
+    password: '',
+    name: '',
+    surname: '',
+    nickname: '',
+}
+
 export const mockUser: iUser = {
     _id: '1',
     email: 'string',
@@ -79,7 +87,7 @@ export const reducer = {
 };
 
 export const preloadedState: iStore = {
-    user: [mockUser] as iUser[],
+    user: mockUser,
     users: [mockUser] as iUser[],
     rooms: [mockRoom, mockRoom2] as iRoom[],
     groupRoom: [mockRoom._id] as string[],
