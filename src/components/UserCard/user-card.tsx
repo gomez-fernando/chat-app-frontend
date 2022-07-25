@@ -8,7 +8,7 @@ import { Avatar } from '../Avatar/avatar';
 import styles from './user-card.module.css';
 
 export function UserCard({ otherUser }: { otherUser: iUser }) {
-    const user = useSelector((store: iStore) => store.user[0]);
+    const user = useSelector((store: iStore) => store.user);
 
     const rooms = useSelector((store: iStore) => store.rooms);
     const navigate = useNavigate();
@@ -35,26 +35,18 @@ export function UserCard({ otherUser }: { otherUser: iUser }) {
                 messages: [],
                 image: '',
             };
-            console.log('new room esended:' , newRoom);
+            console.log('new room esended:', newRoom);
             socket.emit('new-p2p-room', newRoom);
         }
     };
-// TODO this
-    // socket.on('new-p2p-room', (payload: iRoom) => {
-    //     // console.log(payload.owner);
-    //     // if (payload.owner === user._id) {
-    //     //     socket.emit('on-conversation', {
-    //     //         userId: user._id,
-    //     //         token: user.token,
-    //     //         roomId: payload._id,
-    //     //     });
-    //     //     navigate(`/room/${payload._id}`);
-    //     // }
-    // });
 
     return (
         <>
-            <div className={styles.card_container} onClick={handleClick} data-testid="div-user-card">
+            <div
+                className={styles.card_container}
+                onClick={handleClick}
+                data-testid="div-user-card"
+            >
                 <div>
                     <span className={styles.avatar_container}>
                         <Avatar

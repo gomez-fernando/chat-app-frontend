@@ -12,7 +12,7 @@ import styles from './edit-profile-page.module.css';
 import { LocalStoreService } from '../../services/local-storage';
 
 export default function EditProfilePage() {
-    const user = useSelector((store: iStore) => store.user[0]);
+    const user = useSelector((store: iStore) => store.user);
     const localStorage = new LocalStoreService();
 
     const token = localStorage.getToken();

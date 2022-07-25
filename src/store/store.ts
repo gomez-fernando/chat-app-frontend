@@ -4,9 +4,10 @@ import { groupRoomReducer } from "../reducers/group-room/reducer";
 import { loggedUserReducer } from "../reducers/logged-user/reducer";
 import { roomReducer } from "../reducers/room/reducer";
 import { userReducer } from "../reducers/user/reducer";
+import { emptyUser } from "../utils/mocks";
 
 const preloadedState: iStore = {
-    user: [] as iUser[],
+    user: emptyUser,
     users: [] as iUser[],
     rooms: [] as iRoom[],
     groupRoom: [] as string[],

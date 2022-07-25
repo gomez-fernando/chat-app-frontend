@@ -6,7 +6,7 @@ import styles from './room-page.module.css';
 
 export default function RoomPage() {
     const { id } = useParams();
-    const user = useSelector((store: iStore) => store.user[0]);
+    const user = useSelector((store: iStore) => store.user);
 
     const rooms = useSelector((store: iStore) => store.rooms);
     const users = useSelector((store: iStore) => store.users);

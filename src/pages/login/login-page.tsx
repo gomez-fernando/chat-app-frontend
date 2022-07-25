@@ -69,7 +69,7 @@ export default function LoginPage() {
             let user = resp.user;
             user = { ...user, token: resp.token };
 
-            dispatcher(loadLoggedUsersAction([user]));
+            dispatcher(loadLoggedUsersAction(user));
             dispatcher(loadUsersAction(users));
             dispatcher(loadRoomsAction(rooms));
 

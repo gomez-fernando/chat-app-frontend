@@ -10,7 +10,7 @@ export function CreateGroupUsersList({
     data: iUser[];
     group: boolean;
 }) {
-    const user = useSelector((store: iStore) => store.user[0]);
+    const user = useSelector((store: iStore) => store.user);
 
     const users = data.filter((item) => item._id !== user._id);
 

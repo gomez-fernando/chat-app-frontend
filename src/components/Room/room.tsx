@@ -8,7 +8,7 @@ import styles from './room.module.css';
 export function Room({ roomId, data }: { roomId: string; data: iMessage[] }) {
     const rooms = useSelector((store: iStore) => store.rooms);
 
-    const user = useSelector((store: iStore) => store.user[0]);
+    const user = useSelector((store: iStore) => store.user);
     const users = useSelector((store: iStore) => store.users);
 
     const room = rooms.find((room) => roomId === room._id);

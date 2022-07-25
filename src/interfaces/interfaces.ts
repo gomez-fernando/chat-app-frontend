@@ -34,7 +34,7 @@ export interface iMessage{
     seen?: boolean;
 }
 export interface iStore{
-    user: iUser[];
+    user: iUser;
     users: iUser[];
     rooms: iRoom[];
     groupRoom: string[];

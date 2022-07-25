@@ -5,10 +5,7 @@ import Swal from 'sweetalert2';
 import { socket } from '../chat/chat-socket';
 import { Layout } from '../components/Layout/layout';
 import { iRoom, iRouterItem, iStore, iUser } from '../interfaces/interfaces';
-import {
-    loadLoggedUsersAction,
-    updateLoggedUserAction,
-} from '../reducers/logged-user/action.creators';
+import { loadLoggedUsersAction } from '../reducers/logged-user/action.creators';
 import {
     addRoomAction,
     loadRoomsAction,
@@ -25,7 +22,7 @@ import './App.css';
 
 function App() {
     const localStorageService = useMemo(() => new LocalStoreService(), []);
-    const loggedUser = useSelector((store: iStore) => store.user[0]);
+    const loggedUser = useSelector((store: iStore) => store.user);
     const token = localStorageService.getToken();
     const loggedUserId = localStorageService.getUser();
 
@@ -51,7 +48,7 @@ function App() {
 
     socket.on('set-online', (payload: iUser) => {
         if (payload._id === loggedUserId) {
-            dispatcher(loadLoggedUsersAction([payload]));
+            dispatcher(loadLoggedUsersAction(payload));
         }
         dispatcher(updateUserAction(payload as iUser));
     });
@@ -62,7 +59,7 @@ function App() {
 
     socket.on('on-conversation', (payload: iUser) => {
         if (payload._id === loggedUserId) {
-            dispatcher(loadLoggedUsersAction([payload]));
+            dispatcher(loadLoggedUsersAction(payload));
         }
         dispatcher(updateUserAction(payload as iUser));
     });
@@ -133,7 +130,7 @@ function App() {
             apiChat
                 .getUserbyId(userId as string, token as string)
                 .then((user) => {
-                    dispatcher(loadLoggedUsersAction([user]));
+                    dispatcher(loadLoggedUsersAction(user));
                     apiChat
                         .getAllRoomsByUser(userId as string, token as string)
                         .then((rooms) => {
