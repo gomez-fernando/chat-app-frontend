@@ -18,7 +18,7 @@ export function CreateGroupUsersList({
         <ul className={styles.ul_container}>
             {users.map((item) => (
                 <li key={item._id}>
-                    <CreateGroupCard user={item} />
+                    <CreateGroupCard otherUser={item} />
                 </li>
             ))}
         </ul>

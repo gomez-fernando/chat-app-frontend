@@ -11,7 +11,7 @@ describe('Given the UserCard component', () => {
         test('Then it should render the component', async () => {
             render(
                 <BrowserRouter>
-                    <UserCard user={mockUser} />
+                    <UserCard otherUser={mockUser} />
                 </BrowserRouter>,
                 { preloadedState, reducer }
             );
@@ -25,7 +25,7 @@ describe('Given the UserCard component', () => {
             socket.on = jest.fn().mockResolvedValue('result');
             render(
                 <BrowserRouter>
-                    <UserCard user={mockUser} />
+                    <UserCard otherUser={mockUser} />
                 </BrowserRouter>,
                 { preloadedState, reducer }
             );
@@ -40,7 +40,7 @@ describe('Given the UserCard component', () => {
             socket.emit = jest.fn();
             render(
                 <BrowserRouter>
-                    <UserCard user={mockUser} />
+                    <UserCard otherUser={mockUser} />
                 </BrowserRouter>,
                 { preloadedState, reducer }
             );

@@ -5,11 +5,11 @@ import { iStore, iUser } from "../../interfaces/interfaces";
 import { addGroupUserAction, deleteGroupUserAction } from "../../reducers/group-room/action.creators";
 import styles from './create-group-card.module.css';
 
-export function CreateGroupCard({ user }: { user: iUser }) {
+export function CreateGroupCard({ otherUser }: { otherUser: iUser }) {
     const groupRoom = useSelector((store: iStore) => store.groupRoom);
     const dispatcher = useDispatch();
 
-    const participant = groupRoom.find(u => u === user._id);
+    const participant = groupRoom.find(u => u === otherUser._id);
     let initState: boolean;
     (participant) ? initState = true : initState = false;
 
@@ -19,10 +19,10 @@ export function CreateGroupCard({ user }: { user: iUser }) {
         ev.preventDefault();
         if (!added) {
             setAdded(!added);
-            dispatcher(addGroupUserAction(user._id as string));
+            dispatcher(addGroupUserAction(otherUser._id as string));
         } else {
             setAdded(!added);
-            dispatcher(deleteGroupUserAction(user._id as string));
+            dispatcher(deleteGroupUserAction(otherUser._id as string));
         }
     }
 
@@ -32,13 +32,13 @@ export function CreateGroupCard({ user }: { user: iUser }) {
                 <div>
                     <span className={styles.avatar_container}>
                         <Avatar
-                            src={user.avatar as string}
-                            alt={user.nickname}
+                            src={otherUser.avatar as string}
+                            alt={otherUser.nickname}
                         />
                     </span>
                 </div>
                 <div className={styles.info_container}>
-                    <span>{user.nickname}</span>
+                    <span>{otherUser.nickname}</span>
                     {added ? (
                     <span onClick={handleClick} className={styles.added} >seleccionado</span>
                 ) : (

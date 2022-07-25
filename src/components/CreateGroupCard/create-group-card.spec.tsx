@@ -8,7 +8,7 @@ describe('Given the CreateGroupCard component', () => {
         test('Then it should render the component', async () => {
             render(
                 <BrowserRouter>
-                    <CreateGroupCard user={mockUser} />
+                    <CreateGroupCard otherUser={mockUser} />
                 </BrowserRouter>,
                 { preloadedState, reducer }
             );

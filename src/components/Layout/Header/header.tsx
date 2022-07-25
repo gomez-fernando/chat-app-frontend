@@ -73,6 +73,8 @@ export function Header({ navOptions }: { navOptions: iRouterItem[] }) {
     };
 
     const navAndClose = () => {
+        console.log('user on conversation when click links: ', user.onConversation);
+
         closeModal();
         if (user.onConversation !== '') {
             socket.emit('on-conversation', {
@@ -85,6 +87,7 @@ export function Header({ navOptions }: { navOptions: iRouterItem[] }) {
     };
 
     const navAndEmit = (path: string) => {
+        console.log('user on conversation when click links: ', user.onConversation);
         if (user.onConversation !== '') {
             socket.emit('on-conversation', {
                 userId: user._id,

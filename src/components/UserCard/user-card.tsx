@@ -7,15 +7,15 @@ import { sortIds } from '../../utils/sortIds';
 import { Avatar } from '../Avatar/avatar';
 import styles from './user-card.module.css';
 
-export function UserCard({ user }: { user: iUser }) {
-    const loggedUser = useSelector((store: iStore) => store.user[0]);
+export function UserCard({ otherUser }: { otherUser: iUser }) {
+    const user = useSelector((store: iStore) => store.user[0]);
 
     const rooms = useSelector((store: iStore) => store.rooms);
     const navigate = useNavigate();
 
     const handleClick = (ev: SyntheticEvent) => {
         ev.preventDefault();
-        const ids = sortIds([user._id as string, loggedUser._id as string]);
+        const ids = sortIds([otherUser._id as string, user._id as string]);
         const roomName: string = ids[0] + ids[1];
         const exists = rooms.find(
             (room) => (room.name as string) === (roomName as string)
@@ -23,15 +23,15 @@ export function UserCard({ user }: { user: iUser }) {
 
         if (!!exists) {
             socket.emit('on-conversation', {
-                userId: loggedUser._id,
+                userId: user._id,
                 token: user.token,
                 roomId: exists._id,
             });
             navigate(`/room/${exists._id}`);
         } else {
             const newRoom: iRoom = {
-                owner: loggedUser._id as string,
-                users: [loggedUser._id as string, user._id as string],
+                owner: user._id as string,
+                users: [user._id as string, otherUser._id as string],
                 messages: [],
                 image: '',
             };
@@ -42,7 +42,7 @@ export function UserCard({ user }: { user: iUser }) {
 // TODO this
     // socket.on('new-p2p-room', (payload: iRoom) => {
     //     // console.log(payload.owner);
-    //     // if (payload.owner === loggedUser._id) {
+    //     // if (payload.owner === user._id) {
     //     //     socket.emit('on-conversation', {
     //     //         userId: user._id,
     //     //         token: user.token,
@@ -58,13 +58,13 @@ export function UserCard({ user }: { user: iUser }) {
                 <div>
                     <span className={styles.avatar_container}>
                         <Avatar
-                            src={user.avatar as string}
-                            alt={user.nickname}
+                            src={otherUser.avatar as string}
+                            alt={otherUser.nickname}
                         />
                     </span>
                 </div>
                 <div className={styles.info_container}>
-                    <span>{user.nickname}</span>
+                    <span>{otherUser.nickname}</span>
                 </div>
             </div>
         </>

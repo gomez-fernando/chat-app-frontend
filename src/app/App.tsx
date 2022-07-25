@@ -5,7 +5,10 @@ import Swal from 'sweetalert2';
 import { socket } from '../chat/chat-socket';
 import { Layout } from '../components/Layout/layout';
 import { iRoom, iRouterItem, iStore, iUser } from '../interfaces/interfaces';
-import { loadLoggedUsersAction } from '../reducers/logged-user/action.creators';
+import {
+    loadLoggedUsersAction,
+    updateLoggedUserAction,
+} from '../reducers/logged-user/action.creators';
 import {
     addRoomAction,
     loadRoomsAction,
@@ -23,8 +26,8 @@ import './App.css';
 function App() {
     const localStorageService = useMemo(() => new LocalStoreService(), []);
     const loggedUser = useSelector((store: iStore) => store.user[0]);
-    // const token = localStorageService.getToken();
-    // const loggedUserId = localStorageService.getUser();
+    const token = localStorageService.getToken();
+    const loggedUserId = localStorageService.getUser();
 
     const dispatcher = useDispatch();
     const apiChat = useMemo(() => new ApiChat(), []);
@@ -36,7 +39,7 @@ function App() {
 
     socket.on('update-user', (payload) => {
         dispatcher(updateUserAction(payload as iUser));
-        if (payload._id === localStorageService.getUser()) {
+        if (payload._id === loggedUserId) {
             Swal.fire(
                 '',
                 'Tu perfil ha sido actualizado con éxito!',
@@ -46,7 +49,10 @@ function App() {
         }
     });
 
-    socket.on('set-online', (payload) => {
+    socket.on('set-online', (payload: iUser) => {
+        if (payload._id === loggedUserId) {
+            dispatcher(loadLoggedUsersAction([payload]));
+        }
         dispatcher(updateUserAction(payload as iUser));
     });
 
@@ -54,7 +60,10 @@ function App() {
         dispatcher(updateUserAction(payload as iUser));
     });
 
-    socket.on('on-conversation', (payload) => {
+    socket.on('on-conversation', (payload: iUser) => {
+        if (payload._id === loggedUserId) {
+            dispatcher(loadLoggedUsersAction([payload]));
+        }
         dispatcher(updateUserAction(payload as iUser));
     });
 
@@ -63,7 +72,7 @@ function App() {
         dispatcher(addRoomAction(payload.newRoom as iRoom));
         // payload.users.forEach(user => dispatcher(updateUserAction(user as iUser)))
 
-        if (payload.newRoom.owner === localStorageService.getUser()) {
+        if (payload.newRoom.owner === loggedUserId) {
             // socket.emit('on-conversation', {
             //     userId: payload.newRoom.owner,
             //     token: token,
@@ -75,10 +84,10 @@ function App() {
 
     socket.on('new-group-room', (payload: iRoom) => {
         dispatcher(addRoomAction(payload as iRoom));
-        if (payload.owner === localStorageService.getUser()) {
+        if (payload.owner === loggedUserId) {
             socket.emit('on-conversation', {
-                userId: localStorageService.getUser(),
-                token: localStorageService.getToken(),
+                userId: loggedUserId,
+                token: token,
                 roomId: payload._id,
             });
             navigate(`/room/${payload._id}`);
@@ -91,7 +100,7 @@ function App() {
 
     socket.on('delete-account', (payload) => {
         if (loggedUser) {
-            if (payload._id === loggedUser._id) {
+            if (payload._id === loggedUserId) {
                 localStorage.removeItem('User');
                 localStorage.removeItem('Token');
 
