@@ -56,7 +56,6 @@ export default function LoginPage() {
         setLoading(true);
 
         const resp = await apiChat.login(formData);
-        console.log('resp: ', resp);
 
         if (resp.statusCode !== 401) {
             const rooms = await apiChat.getAllRoomsByUser(

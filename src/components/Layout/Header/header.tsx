@@ -28,6 +28,7 @@ export function Header({ navOptions }: { navOptions: iRouterItem[] }) {
         const newUser: iUser = {
             ...user,
             online: false,
+            onConversation: ''
         };
 
         socket.emit('update-user', newUser);
@@ -120,6 +121,7 @@ export function Header({ navOptions }: { navOptions: iRouterItem[] }) {
                             id="open-modal"
                             role="button"
                         />
+                        {user.nickname}
                     </div>
                 </nav>
 

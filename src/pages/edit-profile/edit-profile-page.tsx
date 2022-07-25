@@ -14,7 +14,6 @@ import { LocalStoreService } from '../../services/local-storage';
 export default function EditProfilePage() {
     const user = useSelector((store: iStore) => store.user[0]);
     const localStorage = new LocalStoreService();
-    console.log('user en edit page: ', user);
 
     const token = localStorage.getToken();
 

@@ -23,6 +23,8 @@ import './App.css';
 function App() {
     const localStorageService = useMemo(() => new LocalStoreService(), []);
     const loggedUser = useSelector((store: iStore) => store.user[0]);
+    // const token = localStorageService.getToken();
+    // const loggedUserId = localStorageService.getUser();
 
     const dispatcher = useDispatch();
     const apiChat = useMemo(() => new ApiChat(), []);
@@ -48,12 +50,27 @@ function App() {
         dispatcher(updateUserAction(payload as iUser));
     });
 
+    socket.on('set-offline', (payload) => {
+        dispatcher(updateUserAction(payload as iUser));
+    });
+
     socket.on('on-conversation', (payload) => {
         dispatcher(updateUserAction(payload as iUser));
     });
 
-    socket.on('new-p2p-room', (payload: iRoom) => {
-        dispatcher(addRoomAction(payload as iRoom));
+    socket.on('new-p2p-room', (payload: { newRoom: iRoom; users: iUser[] }) => {
+        console.log('payload.users: ', payload.users);
+        dispatcher(addRoomAction(payload.newRoom as iRoom));
+        // payload.users.forEach(user => dispatcher(updateUserAction(user as iUser)))
+
+        if (payload.newRoom.owner === localStorageService.getUser()) {
+            // socket.emit('on-conversation', {
+            //     userId: payload.newRoom.owner,
+            //     token: token,
+            //     roomId: payload.newRoom._id,
+            // });
+            navigate(`/room/${payload.newRoom._id}`);
+        }
     });
 
     socket.on('new-group-room', (payload: iRoom) => {

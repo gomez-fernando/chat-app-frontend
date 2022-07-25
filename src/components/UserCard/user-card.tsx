@@ -23,7 +23,7 @@ export function UserCard({ user }: { user: iUser }) {
 
         if (!!exists) {
             socket.emit('on-conversation', {
-                userId: user._id,
+                userId: loggedUser._id,
                 token: user.token,
                 roomId: exists._id,
             });
@@ -31,24 +31,26 @@ export function UserCard({ user }: { user: iUser }) {
         } else {
             const newRoom: iRoom = {
                 owner: loggedUser._id as string,
-                users: [user._id as string, loggedUser._id as string],
+                users: [loggedUser._id as string, user._id as string],
                 messages: [],
                 image: '',
             };
+            console.log('new room esended:' , newRoom);
             socket.emit('new-p2p-room', newRoom);
         }
     };
-
-    socket.on('new-p2p-room', (payload: iRoom) => {
-        if (payload.owner === loggedUser._id) {
-            socket.emit('on-conversation', {
-                userId: user._id,
-                token: user.token,
-                roomId: payload._id,
-            });
-            navigate(`/room/${payload._id}`);
-        }
-    });
+// TODO this
+    // socket.on('new-p2p-room', (payload: iRoom) => {
+    //     // console.log(payload.owner);
+    //     // if (payload.owner === loggedUser._id) {
+    //     //     socket.emit('on-conversation', {
+    //     //         userId: user._id,
+    //     //         token: user.token,
+    //     //         roomId: payload._id,
+    //     //     });
+    //     //     navigate(`/room/${payload._id}`);
+    //     // }
+    // });
 
     return (
         <>
