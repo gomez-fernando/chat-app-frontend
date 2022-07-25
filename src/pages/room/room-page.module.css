@@ -8,6 +8,7 @@
     align-items: center;
     padding: 0.5rem 0 0.5rem 0;
 }
-.other_user span:last-child{
+.other_user span:nth-child(2){
+    margin-right: 0.8rem;
     font-weight: bold;
 }
