@@ -16,9 +16,9 @@
     text-align: end;
     justify-self: end;
     width: 70%;
-    padding-right: 1rem;
+    padding: 0.6rem;
     border-radius: 0 20px 0 20px;
-    height: 55px;
+    min-height: 55px;
 }
 .mine div:first-child, .not_mine div:first-child {
     margin: 3px
@@ -29,7 +29,7 @@
     text-align: start;
     width: 70%;
     border-radius: 0 20px 20px 0;
-    padding-left: 1rem;
+    padding: 0.6rem;
     border-radius: 20px 0 20px 0;
-    height: 55px;
+    min-height: 55px;
 }

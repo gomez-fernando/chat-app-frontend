@@ -131,7 +131,6 @@ export function Header({ navOptions }: { navOptions: iRouterItem[] }) {
                             id="open-modal"
                             role="button"
                         />
-                        {user.nickname}
                     </div>
                 </nav>
 
